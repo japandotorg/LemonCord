@@ -15,3 +15,5 @@ exclude = [".github/**", "Cargo.lock"]
 
 [dependencies]
 wry = { version = "0.23.4" }
+image = { version = "0.24.5" }
+anyhow = { version = "1.0.68" }
