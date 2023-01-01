@@ -3,7 +3,7 @@ extern crate wry;
 use wry::{
     application::{
         event::{Event, StartCause, WindowEvent},
-        event_loop::{ControlFlow, EventLoop, self},
+        event_loop::{ControlFlow, EventLoop},
         window::WindowBuilder,
     },
     webview::WebViewBuilder,
