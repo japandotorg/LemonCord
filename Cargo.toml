@@ -1,0 +1,17 @@
+[package]
+name = "lemon-cord"
+version = "0.1.0"
+edition = "2021"
+authors = ["Lemon Rose (japandotorg)"]
+readme = "README.md"
+license = "MIT"
+repository = "https://github.com/japandotorg/lemon-cord"
+description = "A light weight discord client made with love using the Rust programming language."
+keywords = ["discord", "app", "client", "discord-client", "discord-app"]
+categories = ["web-programming", "gui"]
+exclude = [".github/**", "Cargo.lock"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+web-view = { version = "0.7.3" }
