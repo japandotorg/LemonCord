@@ -1,45 +1,38 @@
-name: Bug Report
-description: Create a report to help us improve (Report broken or incorrect behaviour).
-labels: 'Type: Bug'
-body:
-  - type: markdown
-    attributes:
-      value: >
-        Thanks for taking the time to fill out a bug report.
-        If you want real-time support consider joining our Discord at https://melonbot.io/support instead.
+---
+name: Bug report
+about: Create a report to help us improve
+title: ''
+labels: ''
+assignees: ''
 
-        Please note that this form is for bugs only!
+---
 
-  - type: input
-    attributes:
-      label: Summary
-      description: A simple summary of your bug report.
-    validations:
-      required: true
-  
-  - type: textarea
-    attributes:
-      label: Steps To Reproduce
-      description: Steps to reproduce the behavior.
-    validations:
-      required: true
+**Describe the bug**
+A clear and concise description of what the bug is.
 
-  - type: textarea
-    attributes:
-      label: Expected Behavior
-      description: A clear and concise description of what is expected to happen.
-    validations:
-      required: true
+**To Reproduce**
+Steps to reproduce the behavior:
+1. Go to '...'
+2. Click on '....'
+3. Scroll down to '....'
+4. See error
 
-  - type: textarea
-    attributes:
-      label: Platform And Versions
-      description: >
-        OS: [eg: Windows]
-        Rustc: [Run `cargo --version --verbose` and paste the information below.]
-        LemonCord: [Version info can be found in the cargo.toml file of your local copy of the repository.]
+**Expected behavior**
+A clear and concise description of what you expected to happen.
 
-  - type: textarea
-    attributes:
-      label: Additional Context
-      description: If there's anything else to say, please do so here.
+**Screenshots**
+If applicable, add screenshots to help explain your problem.
+
+**Desktop (please complete the following information):**
+ - OS: [e.g. iOS]
+ - Browser [e.g. chrome, safari]
+ - Version [e.g. 22]
+
+**Smartphone (please complete the following information):**
+ - Device: [e.g. iPhone6]
+ - OS: [e.g. iOS8.1]
+ - Browser [e.g. stock browser, safari]
+ - Version [e.g. 22]
+
+**Additional context**
+Add any other context about the problem here.
