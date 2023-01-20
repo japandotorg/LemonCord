@@ -1,11 +1,11 @@
-![lemoncord_logo](./assets/logo.webp)
+<img src="./assets/logo.webp" height="210">
 
 # LemonCord
-LemonCord, A LightWeight discord client made using Rust with the "wry" crate.
-Note: ** Using LemonCord is disallowed by the Discord TOS. It's your risk. **
+LemonCord, A Light-Weight discord client made using Rust with the [wry](https://docs.rs/wry/) crate.
+Note: <strong> Using LemonCord is disallowed by the Discord TOS. It's your risk. </strong>
 
 ## Features
-* LightWeight and basic design
+* Light-Weight and basic design.
 * 100% Open Sourced.
 * No suspicious activity unlike the official client.
 
