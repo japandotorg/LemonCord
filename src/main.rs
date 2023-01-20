@@ -6,13 +6,18 @@ use anyhow::Result;
 
 use wry::{
     application::{
-        platform::windows::WindowBuilderExtWindows,
         event::{Event, StartCause, WindowEvent},
         event_loop::{ControlFlow, EventLoop},
         window::{WindowBuilder, Icon}
     },
     webview::{webview_version, WebViewBuilder},
 };
+
+
+#[allow(dead_code)]
+enum UserEvents {
+    CloseWindow,
+}
 
 
 pub const DISCORD: &str = "https://discord.com/app";
@@ -39,16 +44,13 @@ fn main() -> Result<()> {
         webview_version_info
     );
 
-    let event_loop = EventLoop::new();
+    let event_loop = EventLoop::<UserEvents>::with_user_event();
 
     let window = WindowBuilder::new()
         .with_title(APP_NAME)
         .with_window_icon(Some(
             Icon::from_rgba(icon.clone().into_raw(), icon_width, icon_height).unwrap(),
         )) 
-        .with_taskbar_icon(Some(
-            Icon::from_rgba(icon.clone().into_raw(), icon_width, icon_height).unwrap(),
-        ))
         .with_transparent(true)
         .with_resizable(true)
         .build(&event_loop)
@@ -60,11 +62,15 @@ fn main() -> Result<()> {
         );
 
     #[allow(unused_mut)]
-    let mut _webview = WebViewBuilder::new(window)?
-        .with_user_agent(&user_agent)
-        .with_devtools(cfg!(any(debug_assertions, feature = "devtools")))
-        .with_url(DISCORD)?
-        .build()?;
+    let mut _webview = Some(
+        WebViewBuilder::new(window)?
+            .with_user_agent(&user_agent)
+            .with_accept_first_mouse(true)
+            .with_transparent(true)
+            .with_devtools(cfg!(any(debug_assertions, feature = "devtools")))
+            .with_url(DISCORD)?
+            .build()?,
+    );
 
     event_loop.run(move |event, _, control_flow| {
         *control_flow = ControlFlow::Wait;
@@ -74,7 +80,11 @@ fn main() -> Result<()> {
             Event::WindowEvent {
                 event: WindowEvent::CloseRequested,
                 ..
-            } => *control_flow = ControlFlow::Exit,
+            }
+            | Event::UserEvent(UserEvents::CloseWindow) => {
+                let _ = _webview.take();
+                *control_flow = ControlFlow::Exit
+            }
             _ => (),
         }
     });
