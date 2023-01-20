@@ -1,20 +1,28 @@
----
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
+name: Feature Request
+description: For feature requests regarding LemonCord itself.
+lables: 'Type: Feature'
+body:
+  - type: markdown
+  attributes:
+    value: |
+      Thank you for taking the time to fill our an issue, this template is meant for any feature suggestions.
+      If you want real-time support consider joining our Discord at https://melonbot.io/support instead.
 
----
+  - type: textarea
+    attributes:
+      label: Describe The Feature Request
+      description: A clear and concise description of what the feature is.
+    validations:
+      required: true
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: A clear and concise description of what is expected to happen.
+    validations:
+      required: true
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
-
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
+  - type: textarea
+    attributes:
+      label: Anything else?
+      description: Let us know if you have anything else to share.
