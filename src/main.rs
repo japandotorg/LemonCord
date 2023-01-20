@@ -2,8 +2,6 @@ extern crate wry;
 extern crate image;
 extern crate anyhow;
 
-use anyhow::Result;
-
 use wry::{
     application::{
         event::{Event, StartCause, WindowEvent},
@@ -18,6 +16,10 @@ use wry::{
 enum UserEvents {
     CloseWindow,
 }
+
+
+// Convenient type alias of ``anyhow::Result`` type with ``wry::Error`` for LemonCord.
+pub type Result<T> = anyhow::Result<T, wry::Error>;
 
 
 pub const DISCORD: &str = "https://discord.com/app";
