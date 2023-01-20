@@ -27,10 +27,6 @@ fn main() -> Result<()> {
 
     let (icon_width, icon_height) = icon.dimensions();
 
-    let version_info = env!("CARGO_PKG_VERSION");
-
-    let webview_version_info = webview_version().unwrap();
-
     // Most common User-Agent.
     let user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36".to_string();
 
