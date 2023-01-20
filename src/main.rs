@@ -6,12 +6,11 @@ use anyhow::Result;
 
 use wry::{
     application::{
-        platform::windows::WindowBuilderExtWindows,
         event::{Event, StartCause, WindowEvent},
         event_loop::{ControlFlow, EventLoop},
         window::{WindowBuilder, Icon}
     },
-    webview::{webview_version, WebViewBuilder},
+    webview::{WebViewBuilder},
 };
 
 
@@ -22,7 +21,7 @@ pub const APP_NAME: &str = "LemonCord";
 fn main() -> Result<()> {
     #[allow(unused_mut)]
     let mut icon = image::open("assets/logo.webp")
-        .expect("Failed to open icon path.") 
+        .expect("Failed to open icon path.")
         .to_rgba8();
 
     let (icon_width, icon_height) = icon.dimensions();
@@ -36,15 +35,12 @@ fn main() -> Result<()> {
         .with_title(APP_NAME)
         .with_window_icon(Some(
             Icon::from_rgba(icon.clone().into_raw(), icon_width, icon_height).unwrap(),
-        )) 
-        .with_taskbar_icon(Some(
-            Icon::from_rgba(icon.clone().into_raw(), icon_width, icon_height).unwrap(),
         ))
         .with_transparent(true)
         .with_resizable(true)
         .build(&event_loop)
         .unwrap_or_else(
-            |_| 
+            |_|
                 panic!(
                     "Unable to build window!"
                 )
