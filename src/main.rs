@@ -1,20 +1,32 @@
 extern crate wry;
+extern crate image;
 extern crate anyhow;
 
 use anyhow::Result;
+
 use wry::{
     application::{
+        platform::windows::WindowBuilderExtWindows,
         event::{Event, StartCause, WindowEvent},
         event_loop::{ControlFlow, EventLoop},
-        window::WindowBuilder,
+        window::{WindowBuilder, Icon}
     },
     webview::{webview_version, WebViewBuilder},
 };
 
+
 pub const DISCORD: &str = "https://discord.com/app";
 pub const APP_NAME: &str = "LemonCord";
 
+
 fn main() -> Result<()> {
+    #[allow(unused_mut)]
+    let mut icon = image::open("assets/logo.webp")
+        .expect("Failed to open icon path.") 
+        .to_rgba8();
+
+    let (icon_width, icon_height) = icon.dimensions();
+
     let version_info = env!("CARGO_PKG_VERSION");
 
     let webview_version_info = webview_version().unwrap();
@@ -31,6 +43,12 @@ fn main() -> Result<()> {
 
     let window = WindowBuilder::new()
         .with_title(APP_NAME)
+        .with_window_icon(Some(
+            Icon::from_rgba(icon.clone().into_raw(), icon_width, icon_height).unwrap(),
+        )) 
+        .with_taskbar_icon(Some(
+            Icon::from_rgba(icon.clone().into_raw(), icon_width, icon_height).unwrap(),
+        ))
         .with_transparent(true)
         .with_resizable(true)
         .build(&event_loop)
