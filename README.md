@@ -10,7 +10,7 @@ Note: <strong> Using LemonCord is disallowed by the Discord TOS. It's your risk.
 * No suspicious activity unlike the official client.
 
 # How to contribute
-Fork the project
+Fork the project<br>
 ![fork_button_github](./assets/docs/fork_button.png)
 
 Clone the repository to your computer:
@@ -32,10 +32,11 @@ git add .
 git commit -m "Changes!" -m "I changed: abc"
 ```
 
-Press contirbute on your branch
+Press contirbute on your branch<br>
 ![contirbute_button_github](./assets/docs/contribute_button.png)
 
 Now, Type up a descriptive summary of your changes and anything further you would like to note about the changes inside the body.<br>State in minor detail the changes inside the PR.<br>
+<br>
 You're done! Open the pull request and wait for a response.
 
 
