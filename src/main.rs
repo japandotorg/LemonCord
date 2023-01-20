@@ -10,7 +10,7 @@ use wry::{
         event_loop::{ControlFlow, EventLoop},
         window::{WindowBuilder, Icon}
     },
-    webview::{webview_version, WebViewBuilder},
+    webview::WebViewBuilder,
 };
 
 
@@ -27,22 +27,13 @@ pub const APP_NAME: &str = "LemonCord";
 fn main() -> Result<()> {
     #[allow(unused_mut)]
     let mut icon = image::open("assets/logo.webp")
-        .expect("Failed to open icon path.") 
+        .expect("Failed to open icon path.")
         .to_rgba8();
 
     let (icon_width, icon_height) = icon.dimensions();
 
-    let version_info = env!("CARGO_PKG_VERSION");
-
-    let webview_version_info = webview_version().unwrap();
-
-    let user_agent = format!(
-        "{} v{} ({}; {})",
-        APP_NAME,
-        version_info,
-        std::env::consts::OS,
-        webview_version_info
-    );
+    // Most common User-Agent.
+    let user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36".to_string();
 
     let event_loop = EventLoop::<UserEvents>::with_user_event();
 
@@ -50,12 +41,12 @@ fn main() -> Result<()> {
         .with_title(APP_NAME)
         .with_window_icon(Some(
             Icon::from_rgba(icon.clone().into_raw(), icon_width, icon_height).unwrap(),
-        )) 
+        ))
         .with_transparent(true)
         .with_resizable(true)
         .build(&event_loop)
         .unwrap_or_else(
-            |_| 
+            |_|
                 panic!(
                     "Unable to build window!"
                 )
