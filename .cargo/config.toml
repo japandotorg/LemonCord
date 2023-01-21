@@ -1,0 +1,29 @@
+[target.aarch64-unknown-linux-gnu]
+linker = "aarch64-linux-gnu-gcc"
+
+[target.i686-pc-windows-gnu]
+linker = "i686-pc-windows-gnu"
+
+[target.i686-unknown-linux-gnu]
+linker = "i686-unknown-linux-gnu"
+
+[target.x86_64-pc-windows-gnu]
+linker = "x86_64-pc-windows-gnu"
+
+[target.x86_64-unknown-linux-gnu]
+linker = "x86_64-unknown-linux-gnu"
+
+[target.x86_64-apple-darwin]
+linker = "x86_64-apple-darwin"
+
+[target.armv7-unknown-linux-musleabi]
+linker = "armv7-unknown-linux-musleabi"
+
+[target.aarch64-unknown-linux-musl]
+linker = "aarch64-unknown-linux-musl"
+
+[target.x86_64-unknown-linux-musl]
+linker = "x86_64-unknown-linux-musl"
+
+[target.wasm32-wasi]
+linker = "wasm32-wasi"
