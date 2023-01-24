@@ -7,7 +7,7 @@ on:
       - "Cargo.toml"
 
 jobs:
-  clippy_fmt_check:
+  clippy_check:
     runs-on: macos-latest
 
     steps:
@@ -23,8 +23,12 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           args: --all-targets -- -D warnings
-      - name: fmt
-        uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: --all -- --check
+  
+  fmt_check:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dtolnay/rust-toolchain@nightly
+        with: { components: rustfmt }
+      - run: cargo fmt --all -- --check
