@@ -17,6 +17,7 @@ exclude = [".github/**", "Cargo.lock"]
 dirs = { version = "4.0.0" }
 image = { version = "0.24.5" }
 anyhow = { version = "1.0.68" }
+tokio = { version = "1.24.2", features = ["full"] }
 wry = { version = "0.24.1", features = ["devtools"] }
 
 [profile.dev]
