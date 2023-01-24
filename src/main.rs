@@ -3,7 +3,9 @@ extern crate dirs;
 extern crate image;
 extern crate tokio;
 extern crate anyhow;
+extern crate tracing;
 
+use tracing::error;
 
 use wry::{
     application::{
@@ -45,7 +47,16 @@ pub const APP_NAME: &str = "LemonCord";
 
 
 #[tokio::main]
-async fn main() -> Result<()> {
+async fn main() {
+    if let Err(err) = discord().await {
+        error!("Fatal error in main: {err:?}");
+    }
+}
+
+async fn discord() -> Result<()> {
+    const VERSION: &str = env!("CARGO_PKG_VERSION");
+    println!("LemonCord: {:?}", &VERSION.to_string().to_owned());
+
     #[cfg(target_os = "macos")]
     let (menu_bar_menu, close_item) = {
         let mut menu_bar_menu = Menu::new();
@@ -70,22 +81,22 @@ async fn main() -> Result<()> {
         (menu_bar_menu, close_item)
     };
 
-    let event_loop = EventLoop::<UserEvents>::with_user_event();
+    let event_loop: EventLoop<UserEvents> = EventLoop::<UserEvents>::with_user_event();
 
-    let main_window = WindowBuilder::new()
+    let main_window: WindowBuilder = WindowBuilder::new()
         .with_title(APP_NAME)
         .with_transparent(true)
         .with_resizable(true);
 
     #[cfg(target_os = "windows")]
-    let window = {
-        let mut icon_path = format!("assets/{}_logo.webp", APP_NAME);
+    let window: Window = {
+        let mut icon_path: String = format!("assets/{}_logo.webp", APP_NAME);
 
         if !std::path::Path::new(&icon_path).exists() {
             icon_path = "assets/logo.webp".to_string();
         }
 
-        let icon = load_icon(std::path::Path::new(&icon_path));
+        let icon: Icon = load_icon(std::path::Path::new(&icon_path));
 
         main_window
             .with_window_icon(Some(icon.clone()))
@@ -100,14 +111,14 @@ async fn main() -> Result<()> {
     };
 
     #[cfg(target_os = "linux")]
-    let window = {
-        let mut icon_path = format!("assets/{}_logo.webp", APP_NAME);
+    let window: Window = {
+        let mut icon_path: String = format!("assets/{}_logo.webp", APP_NAME);
 
         if !std::path::Path::new(&icon_path).exists() {
             icon_path = "assets/logo.webp".to_string();
         }
 
-        let icon = load_icon(std::path::Path::new(&icon_path));
+        let icon: Icon = load_icon(std::path::Path::new(&icon_path));
 
         main_window
             .with_window_icon(Some(icon.clone()))
@@ -121,7 +132,7 @@ async fn main() -> Result<()> {
     };
 
     #[cfg(target_os = "macos")]
-    let window = {
+    let window: Window = {
         main_window
             .with_fullsize_content_view(true)
             .with_titlebar_buttons_hidden(false)
@@ -141,7 +152,7 @@ async fn main() -> Result<()> {
         if req == "drag_window" {
             let _ = window.drag_window();
         } else if req == "fullscreen" {
-            let is_maximuzed = window.is_maximized();
+            let is_maximuzed: bool = window.is_maximized();
             window.set_maximized(!is_maximuzed);
         }
     };
@@ -163,7 +174,7 @@ async fn main() -> Result<()> {
         std::fs::create_dir(&data_dir)
             .unwrap_or_else(
                 |_| 
-                    panic!("Can't create dir {}", data_dir.display())
+                    error!("Can't create dir {}", data_dir.display())
             );
     }
     
@@ -172,9 +183,9 @@ async fn main() -> Result<()> {
 
     #[allow(unused_mut)]
     #[cfg(any(target_os = "linux", target_os = "windows"))]
-    let mut _webview = {
+    let mut _webview: Option<wry::webview::WebView> = {
         #[cfg(target_os = "windows")]
-        let user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36".to_string();
+        let user_agent: String = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36".to_string();
         
         #[cfg(target_os = "linux")]
         let user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36".to_string();
@@ -193,8 +204,8 @@ async fn main() -> Result<()> {
 
     #[allow(unused_mut)]
     #[cfg(target_os = "macos")]
-    let _webview = {
-        let user_agent_string = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15".to_string();
+    let _webview: Option<wry::webview::WebView> = {
+        let user_agent: String = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15".to_string();
         
         Some(
             WebViewBuilder::new(window)?
@@ -212,7 +223,7 @@ async fn main() -> Result<()> {
         _webview.open_devtools();
     }
 
-    event_loop.run(move |event, _, control_flow| {
+    event_loop.run(move |event: Event<UserEvents>, _, control_flow: &mut ControlFlow| {
         *control_flow = ControlFlow::Wait;
 
         match event {
@@ -249,7 +260,7 @@ fn load_icon(path: &std::path::Path) -> Icon {
             .into_rgba8();
 
         let (width, height) = image.dimensions();
-        let rgba = image.into_raw();
+        let rgba: Vec<u8> = image.into_raw();
         (rgba, width, height)
     };
     Icon::from_rgba(icon_rgba, icon_width, icon_height).expect("Failed to open icon.")
