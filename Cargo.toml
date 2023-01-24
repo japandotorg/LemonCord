@@ -5,13 +5,11 @@ edition = "2021"
 authors = ["Lemon Rose (japandotorg)"]
 readme = "README.md"
 license = "MIT"
-copyright = "Copyright (c) japandotorg 2022-present. All rights reserved"
 repository = "https://github.com/japandotorg/lemon-cord"
 description = "A light weight discord client made with love using the Rust programming language."
 keywords = ["discord", "app", "client", "discord-client", "discord-app"]
 categories = ["web-programming", "gui"]
 exclude = [".github/**", "Cargo.lock"]
-resources = ["assets"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -20,3 +18,11 @@ wry = { version = "0.23.4" }
 dirs = { version = "4.0.0" }
 image = { version = "0.24.5" }
 anyhow = { version = "1.0.68" }
+
+[profile.dev]
+debug = true
+debug-assertions = true
+
+[profile.release]
+debug = false
+debug-assertions = false
