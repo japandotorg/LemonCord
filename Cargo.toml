@@ -17,5 +17,6 @@ resources = ["assets"]
 
 [dependencies]
 wry = { version = "0.23.4" }
+dirs = { version = "4.0.0" }
 image = { version = "0.24.5" }
 anyhow = { version = "1.0.68" }
