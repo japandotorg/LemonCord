@@ -1,6 +1,7 @@
 extern crate wry;
 extern crate dirs;
 extern crate image;
+extern crate tokio;
 extern crate anyhow;
 
 
@@ -43,7 +44,8 @@ pub const DISCORD: &str = "https://discord.com/app";
 pub const APP_NAME: &str = "LemonCord";
 
 
-fn main() -> Result<()> {
+#[tokio::main]
+async fn main() -> Result<()> {
     #[cfg(target_os = "macos")]
     let (menu_bar_menu, close_item) = {
         let mut menu_bar_menu = Menu::new();
@@ -193,13 +195,16 @@ fn main() -> Result<()> {
     #[cfg(target_os = "macos")]
     let _webview = {
         let user_agent_string = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15".to_string();
-        WebViewBuilder::new(window)?
-            .with_user_agent(&user_agent)
-            .with_url(&DISCORD.to_string())?
-            .with_devtools(cfg!(any(debug_assertions, feature = "devtools")))
-            .with_ipc_handler(_handler)
-            .with_back_forward_navigation_gestures(true)
-            .build()?
+        
+        Some(
+            WebViewBuilder::new(window)?
+                .with_user_agent(&user_agent)
+                .with_url(&DISCORD.to_string())?
+                .with_devtools(cfg!(any(debug_assertions, feature = "devtools")))
+                .with_ipc_handler(_handler)
+                .with_back_forward_navigation_gestures(true)
+                .build()?
+        )
     };
 
     #[cfg(feature = "devtools")]
