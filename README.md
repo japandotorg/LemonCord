@@ -1,7 +1,7 @@
 <img src="./assets/docs/banner.png">
 
 # LemonCord
-LemonCord, A fast & light-weight Discord Client written in Rust using the [wry](https://docs.rs/wry/) crate.
+A fast & light-weight Discord Client written in Rust using the [wry](https://docs.rs/wry/) crate.
 
 ## Features
 - Fast, light-weight, easy to use.
