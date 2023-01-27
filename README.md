@@ -107,3 +107,15 @@ move /LemonCord/target/release/lemon-cord.exe /LemonCord/
 After that, open the `lemon-cord.exe` executable from your folder.
 You should be able to use Discord just as you could with any other client.
 
+## Discord / Support
+
+Join our [Discord Server](https://melonbot.io/support) for further Updates, Announcements, Support or just to chat with the developer.
+
+## Contributors
+
+For information on contributing to this project, please see [CONTRIBUTING.md](/CONTRIBUTING.md).
+
+[![Contributors][contributors-image]][contributors-link]
+
+[contributors-image]: https://contrib.rocks/image?repo=japandotorg/LemonCord
+[contributors-link]: https://github.com/japandotorg/LemonCord/graphs/contributors
