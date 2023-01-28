@@ -7,6 +7,8 @@ extern crate tracing;
 
 use tracing::error;
 
+mod log;
+
 use wry::{
     application::{
         event::{Event, StartCause, WindowEvent},
@@ -37,7 +39,6 @@ enum UserEvents {
     CloseWindow,
 }
 
-
 // Convenient type alias of ``anyhow::Result`` type with ``wry::Error`` for LemonCord.
 pub type Result<T> = anyhow::Result<T, wry::Error>;
 
@@ -45,11 +46,10 @@ pub type Result<T> = anyhow::Result<T, wry::Error>;
 pub const DISCORD: &str = "https://discord.com/app";
 pub const APP_NAME: &str = "LemonCord";
 
-
 #[tokio::main(flavor = "current_thread")]
 async fn main() {
     const VERSION: &str = env!("CARGO_PKG_VERSION");
-    println!("LemonCord : {:?}", &VERSION.to_string().to_owned());
+    log::write(format!("LemonCord : {:?}", &VERSION.to_string().to_owned()), log::Priority::Info);
 
     if let Err(err) = discord().await {
         error!("Fatal error in main: {err:?}");
@@ -260,4 +260,19 @@ fn load_icon(path: &std::path::Path) -> Icon {
         (rgba, width, height)
     };
     Icon::from_rgba(icon_rgba, icon_width, icon_height).expect("Failed to open icon.")
+}
+
+// TESTS ( Move to new file maybe? )
+#[cfg(test)]
+mod tests {
+    use super::log;
+    use strum::IntoEnumIterator;
+
+    #[test]
+    fn test_log() {
+        for priority in log::Priority::iter() {
+            println!("{:?}", priority);
+            log::write("test_log: test logging capability".to_string(), priority);
+        }
+    }
 }
