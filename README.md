@@ -75,7 +75,7 @@ You can check if you've successfully installed Rust or not using the following c
 $ rustc --version
 ```
 
-Alright, now that we have rust installed, it's time to downlaod LemonCord
+Alright, now that we have rust installed, it's time to download LemonCord
 ```sh
  # Download from github
 $ git clone https://github.com/japandotorg/LemonCord.git
