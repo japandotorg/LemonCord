@@ -27,3 +27,6 @@ linker = "x86_64-unknown-linux-musl"
 
 [target.wasm32-wasi]
 linker = "wasm32-wasi"
+
+[env]
+RUST_BACKTRACE = "1"
