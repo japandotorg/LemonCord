@@ -46,7 +46,7 @@ pub const DISCORD: &str = "https://discord.com/app";
 pub const APP_NAME: &str = "LemonCord";
 
 
-#[tokio::main]
+#[tokio::main(flavor = "current_thread")]
 async fn main() {
     if let Err(err) = discord().await {
         error!("Fatal error in main: {err:?}");
