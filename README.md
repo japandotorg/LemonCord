@@ -10,7 +10,7 @@ A fast & light-weight Discord Client written in Rust using the [wry](https://doc
 - Cross platform support.
 
 ## Is this against the Discord ToS?
-Long story short.. LemonCord is "possibly" against the Discord Terms-of-Service, LemonCordis an embedded version of the [Discord](https://discord.com/app) website. It cannot be guaranteed if LemonCord is against ToS or not, but you should keep reading:
+Long story short.. LemonCord is "possibly" against the Discord Terms-of-Service, LemonCord is an embedded version of the [Discord](https://discord.com/app) website. It cannot be guaranteed if LemonCord is against ToS or not, but you should keep reading:
 
 As of right now, Discord is not going out of their way to detect client mods or ban client mod users. On top of that, LemonCord does not make any manual HTTP requests unlike certain client mods / plugins, so your client's user agent is the same as a legitimate client. Meaning Discord doesn't detect a client app like LemonCord. They can go our of their way to start detecting it but they don't. Even if they somwhow did start detecting LemonCord, users are very unlikely to be banned on sight. It doesn't make sense for Discord to start banning a substantial part of it's userbase (unofficial client users) without any kind of warning. Not to mention that LemonCord doesn't have any type of client modifications or anything suspicious, implying LemonCord users can't be banned for indirect ToS violations (e.g. selfbotting).
 
