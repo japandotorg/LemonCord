@@ -1,0 +1,38 @@
+name: "Code Coverage"
+
+on:
+  schedule:
+    - cron: 13 9 * * *
+  workflow_dispatch:
+    
+env:
+  # use `haswell` instead of `native` due to some GitHub Actions runners not
+  # supporting some `avx512` instructions
+  RUSTFLAGS: -C target-cpu=haswell
+
+jobs:
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+        
+      - name: Cache dependencies
+        uses: Swatinem/rust-cache@v2
+
+      - name: Collect coverage
+        uses: actions-rs/tarpaulin@v0.1
+        with:
+          args: "--ignore-tests --all-features"
+
+      - name: Upload coverage to codecov.io
+        uses: codecov/codecov-action@v3
+
+      - name: Upload coverage to GitHub
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-coverage-report
+          path: cobertura.xml
+      
