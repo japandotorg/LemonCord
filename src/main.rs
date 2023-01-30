@@ -194,20 +194,22 @@ async fn discord() -> Result<()> {
 
     #[allow(unused_mut)]
     #[cfg(any(target_os = "linux", target_os = "windows"))]
-    let mut _webview: wry::webview::WebView = {
+    let mut _webview: Option< wry::webview::WebView > = {
         #[cfg(target_os = "windows")]
         let user_agent: String = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36".to_string();
         
         #[cfg(target_os = "linux")]
         let user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36".to_string();
-        WebViewBuilder::new(window)?
-            .with_user_agent(&user_agent)
-            .with_accept_first_mouse(true)
-            .with_transparent(true)
-            .with_devtools(cfg!(any(debug_assertions, feature = "devtools")))
-            .with_url(&DISCORD.to_string())?
-            .with_web_context(&mut web_context)
-            .build()?
+        Some (
+            WebViewBuilder::new(window)?
+                .with_user_agent(&user_agent)
+                .with_accept_first_mouse(true)
+                .with_transparent(true)
+                .with_devtools(cfg!(any(debug_assertions, feature = "devtools")))
+                .with_url(&DISCORD.to_string())?
+                .with_web_context(&mut web_context)
+                .build()?
+        )
     };
 
     #[allow(unused_mut)]
