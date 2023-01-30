@@ -7,12 +7,12 @@ A fast & light-weight Discord Client written in Rust using the [wry](https://doc
 - Fast, light-weight, easy to use.
 - 100% Open sourced.
 - No suspicious activity unlike some other modded clients.
-- Cross platform support.
+- Cross-platform support.
 
 ## Is this against the Discord ToS?
-Long story short.. LemonCord is "possibly" against the Discord Terms-of-Service, LemonCord is an embedded version of the [Discord](https://discord.com/app) website. It cannot be guaranteed if LemonCord is against ToS or not, but you should keep reading:
+Long story short. LemonCord is "possibly" against the Discord Terms-of-Service, LemonCord is an embedded version of the [Discord](https://discord.com/app) website. It cannot be guaranteed if LemonCord is against ToS or not, but you should keep reading:
 
-As of right now, Discord is not going out of their way to detect client mods or ban client mod users. On top of that, LemonCord does not make any manual HTTP requests unlike certain client mods / plugins, so your client's user agent is the same as a legitimate client. Meaning Discord doesn't detect a client app like LemonCord. They can go our of their way to start detecting it but they don't. Even if they somwhow did start detecting LemonCord, users are very unlikely to be banned on sight. It doesn't make sense for Discord to start banning a substantial part of it's userbase (unofficial client users) without any kind of warning. Not to mention that LemonCord doesn't have any type of client modifications or anything suspicious, implying LemonCord users can't be banned for indirect ToS violations (e.g. selfbotting).
+As of right now, Discord is not going out of their way to detect client mods or ban client mod users. On top of that, LemonCord does not make any manual HTTP requests unlike certain client mods / plugins, so your client's user agent is the same as a legitimate client. Meaning Discord doesn't detect a client app like LemonCord. They can go our of their way to start detecting it, but they don't. Even if they somehow did start detecting LemonCord, users are very unlikely to be banned on sight. It doesn't make sense for Discord to start banning a substantial part of it's user-base (unofficial client users) without any kind of warning. Not to mention that LemonCord doesn't have any type of client modifications or anything suspicious, implying LemonCord users can't be banned for indirect ToS violations (e.g. self-botting).
 
 ## Platform-specific notes
 All platforms use [TAO](https://github.com/tauri-apps/tao) to build the window, and [wry](https://github.com/tauri-apps/wry) re-exports it as an application module. Here's the underlying web engine each platform uses, and some dependencies you might need to install before running [LemonCord](https://github.com/japandotorg/LemonCord).
@@ -22,14 +22,14 @@ All platforms use [TAO](https://github.com/tauri-apps/tao) to build the window, 
 
 Tao uses [gtk-rs](https://gtk-rs.org/) and it's related libraries for window creation and wry also needs [WebKitGTK](https://webkitgtk.org/) for WebView. So please make sure the following packages are installed:
 
-**Arch based distrobutions:**
+**Arch based distributions:**
 ```sh
 $ sudo pacman -Syu webkit2gtk-4.1 libappindicator-gtk3
 ```
 
 The `libayatana-indicator` package can be installed from the Arch User Repository (AUR).
 
-**Debain based distrobutions**
+**Debian based distributions**
 ```sh
 $ sudo apt install libwebkit2gtk-4.1-dev libayatana-appindicator3-dev
 ```
@@ -76,7 +76,7 @@ You can check if you've successfully installed Rust or not using the following c
 $ rustc --version
 ```
 
-Alright, now that we have rust installed, it's time to download LemonCord
+Alright, now that we have rust installed, it's time to download LemonCord:
 ```sh
  # Download from github
 $ git clone https://github.com/japandotorg/LemonCord.git
@@ -103,9 +103,9 @@ move /LemonCord/target/release/lemon-cord.exe /LemonCord/
 
 ## Discord / Support
 
-Join our [Discord Server](https://melonbot.io/support) for further updates, announcements and Support, or just to chat with the developer.
+Join our [Discord Server](https://melonbot.io/support) for further updates, announcements and support, or just to chat with the developer.
 
-## Contributors
+## ♥ Contributors
 
 For information on contributing to this project, please see [CONTRIBUTING.md](/CONTRIBUTING.md).
 
