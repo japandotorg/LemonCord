@@ -48,15 +48,15 @@ pub const APP_NAME: &str = "LemonCord";
 
 #[tokio::main(flavor = "current_thread")]
 async fn main() {
+    const VERSION: &str = env!("CARGO_PKG_VERSION");
+    println!("LemonCord : {:?}", &VERSION.to_string().to_owned());
+
     if let Err(err) = discord().await {
         error!("Fatal error in main: {err:?}");
     }
 }
 
 async fn discord() -> Result<()> {
-    const VERSION: &str = env!("CARGO_PKG_VERSION");
-    println!("LemonCord: {:?}", &VERSION.to_string().to_owned());
-
     #[cfg(target_os = "macos")]
     let (menu_bar_menu, close_item) = {
         let mut menu_bar_menu = Menu::new();

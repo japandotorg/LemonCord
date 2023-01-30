@@ -1,0 +1,7 @@
+msrv = "1.53"
+cognitive-complexity-threshold = 20
+doc-valid-idents = [
+    "UserAgent",
+]
+enum-variant-name-threshold = 1
+single-char-binding-names-threshold = 3
