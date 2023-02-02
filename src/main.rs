@@ -103,10 +103,12 @@ async fn discord() -> Result<()> {
             .with_taskbar_icon(Some(icon.clone()))
             .build(&event_loop)
             .unwrap_or_else(
-                |_|
-                    panic!(
-                        "Unable to build window!"
-                    )
+                |_| {
+                    log::write(
+                        "Unable to create window. shutting down".to_string(),
+                        log::Priority::High
+                    );
+                }
             )
     };
 
@@ -143,11 +145,14 @@ async fn discord() -> Result<()> {
             .with_menu(menu_bar_menu)
             .build(&event_loop)
             .unwrap_or_else(
-                |_|
-                    panic!(
-                        "Unable to build window!"
+                |_| {
+                    log::write(
+                        "Unable to create window. shutting down",
+                        log::Priority::High
                     )
+                }
             )
+
     };
 
     let _handler = move |window: &Window, req: String| {
@@ -164,7 +169,7 @@ async fn discord() -> Result<()> {
         Some(path1) => path1,
         None => {
             log::write(
-                "Unable to locate your HOME your home directory. shutting down, this should NEVER happen.".to_string(),
+                "Unable to locate your HOME directory. Shutting down, this should NEVER happen.".to_string(),
                 log::Priority::High
             );
             std::path::PathBuf::new() // We are still shutting down. The rust compiler doesn't understand this and throws `match arms` panic.
