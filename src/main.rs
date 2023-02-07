@@ -5,6 +5,7 @@ extern crate tokio;
 extern crate anyhow;
 
 mod log;
+mod tests;
 
 use wry::{
     application::{
@@ -294,17 +295,3 @@ fn load_icon(path: &std::path::Path) -> Icon {
     r.unwrap()
 }
 
-// TESTS ( Move to new file maybe? )
-#[cfg(test)]
-mod tests {
-    use super::log;
-    use strum::IntoEnumIterator;
-
-    #[test]
-    fn test_log() {
-        for priority in log::Priority::iter() {
-            log::write(format!( "{:?}", priority ), log::Priority::Info);
-            log::write("test_log: test logging capability".to_string(), priority);
-        }
-    }
-}
