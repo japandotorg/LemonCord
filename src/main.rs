@@ -3,9 +3,9 @@ extern crate dirs;
 extern crate image;
 extern crate tokio;
 extern crate anyhow;
-extern crate tracing;
 
-use tracing::error;
+mod log;
+mod tests;
 
 use wry::{
     application::{
@@ -37,7 +37,6 @@ enum UserEvents {
     CloseWindow,
 }
 
-
 // Convenient type alias of ``anyhow::Result`` type with ``wry::Error`` for LemonCord.
 pub type Result<T> = anyhow::Result<T, wry::Error>;
 
@@ -45,14 +44,16 @@ pub type Result<T> = anyhow::Result<T, wry::Error>;
 pub const DISCORD: &str = "https://discord.com/app";
 pub const APP_NAME: &str = "LemonCord";
 
-
 #[tokio::main(flavor = "current_thread")]
 async fn main() {
     const VERSION: &str = env!("CARGO_PKG_VERSION");
-    println!("LemonCord : {:?}", &VERSION.to_string().to_owned());
+    log::write(format!("LemonCord : {:?}", &VERSION.to_string().to_owned()), log::Priority::Info);
 
-    if let Err(err) = discord().await {
-        error!("Fatal error in main: {err:?}");
+    if discord().await.is_err() {
+        log::write(
+            "Fatal error while creating discord window. shutting down.".to_string(),
+            log::Priority::High
+        );
     }
 }
 
@@ -103,10 +104,12 @@ async fn discord() -> Result<()> {
             .with_taskbar_icon(Some(icon.clone()))
             .build(&event_loop)
             .unwrap_or_else(
-                |_|
-                    panic!(
-                        "Unable to build window!"
-                    )
+                |_| {
+                    log::write(
+                        "Unable to create window. shutting down".to_string(),
+                        log::Priority::High
+                    );
+                }
             )
     };
 
@@ -120,15 +123,17 @@ async fn discord() -> Result<()> {
 
         let icon: Icon = load_icon(std::path::Path::new(&icon_path));
 
-        main_window
+        let window = main_window
             .with_window_icon(Some(icon.clone()))
-            .build(&event_loop)
-            .unwrap_or_else(
-                |_|
-                    panic!(
-                        "Unable to build window!"
-                    )
-            )
+            .build(&event_loop);
+
+        if window.is_err() {
+            log::write(
+                "Unable to create window. shutting down".to_string(),
+                log::Priority::High
+            );
+        }
+        window.unwrap()
     };
 
     #[cfg(target_os = "macos")]
@@ -141,26 +146,35 @@ async fn discord() -> Result<()> {
             .with_menu(menu_bar_menu)
             .build(&event_loop)
             .unwrap_or_else(
-                |_|
-                    panic!(
-                        "Unable to build window!"
+                |_| {
+                    log::write(
+                        "Unable to create window. shutting down",
+                        log::Priority::High
                     )
+                }
             )
+
     };
 
     let _handler = move |window: &Window, req: String| {
         if req == "drag_window" {
             let _ = window.drag_window();
         } else if req == "fullscreen" {
-            let is_maximuzed: bool = window.is_maximized();
-            window.set_maximized(!is_maximuzed);
+            let is_maximized: bool = window.is_maximized();
+            window.set_maximized(!is_maximized);
         }
     };
 
     #[cfg(any(target_os = "linux", target_os = "windows"))]
     let home_dir = match dirs::home_dir() {
         Some(path1) => path1,
-        None => panic!("Error, can't find the home directory!!"),
+        None => {
+            log::write(
+                "Unable to locate your HOME directory. Shutting down, this should NEVER happen.".to_string(),
+                log::Priority::High
+            );
+            std::path::PathBuf::new() // We are still shutting down. The rust compiler doesn't understand this and throws `match arms` panic.
+        },
     };
 
     #[cfg(target_os = "windows")]
@@ -174,7 +188,10 @@ async fn discord() -> Result<()> {
         std::fs::create_dir(&data_dir)
             .unwrap_or_else(
                 |_| 
-                    error!("Can't create dir {}", data_dir.display())
+                    log::write(
+                        format!( "Can't create dir {} Config files cannot save.", data_dir.display() ),
+                        log::Priority::Medium
+                    )
             );
     }
     
@@ -183,14 +200,13 @@ async fn discord() -> Result<()> {
 
     #[allow(unused_mut)]
     #[cfg(any(target_os = "linux", target_os = "windows"))]
-    let mut _webview: Option<wry::webview::WebView> = {
+    let mut _webview: Option< wry::webview::WebView > = {
         #[cfg(target_os = "windows")]
         let user_agent: String = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36".to_string();
         
         #[cfg(target_os = "linux")]
         let user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36".to_string();
-        
-        Some(
+        Some (
             WebViewBuilder::new(window)?
                 .with_user_agent(&user_agent)
                 .with_accept_first_mouse(true)
@@ -198,7 +214,7 @@ async fn discord() -> Result<()> {
                 .with_devtools(cfg!(any(debug_assertions, feature = "devtools")))
                 .with_url(&DISCORD.to_string())?
                 .with_web_context(&mut web_context)
-                .build()?,
+                .build()?
         )
     };
 
@@ -227,13 +243,15 @@ async fn discord() -> Result<()> {
         *control_flow = ControlFlow::Wait;
 
         match event {
-            Event::NewEvents(StartCause::Init) => println!("Discord web view successfully started."),
+            Event::NewEvents(StartCause::Init) => log::write(
+                "Discord web view successfully started.".to_string(),
+                log::Priority::Info
+            ),
             Event::WindowEvent {
                 event: WindowEvent::CloseRequested,
                 ..
             }
             | Event::UserEvent(UserEvents::CloseWindow) => {
-                let _ = _webview.take();
                 *control_flow = ControlFlow::Exit
             }
             | Event::MenuEvent {
@@ -245,7 +263,10 @@ async fn discord() -> Result<()> {
                 if menu_id == close_item.clone().id() {
                     window.set_minimized(true)
                 }
-                println!("Clicked on {:?}", menu_id);
+                log::write(
+                    format!( "Clicked on {:?}", menu_id),
+                    log::Priority::Info
+                );
             }
             _ => (),
         }
@@ -263,5 +284,14 @@ fn load_icon(path: &std::path::Path) -> Icon {
         let rgba: Vec<u8> = image.into_raw();
         (rgba, width, height)
     };
-    Icon::from_rgba(icon_rgba, icon_width, icon_height).expect("Failed to open icon.")
+
+    let r = Icon::from_rgba(icon_rgba, icon_width, icon_height);
+    if r.is_err() {
+        log::write(
+            "Failed to open icon. shutting down.".to_string(),
+            log::Priority::High
+        );
+    }
+    r.unwrap()
 }
+

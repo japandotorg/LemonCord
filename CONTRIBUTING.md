@@ -10,9 +10,9 @@ For bug reports or requests [submit an issue](https://github.com/japandotorg/Lem
 
 ## Pull Requests
 
-The preffered way to contribute is to fork the [main repository](https://github.com/japandotorg/LemonCord) on Github.
+The preferred way to contribute is to fork the [main repository](https://github.com/japandotorg/LemonCord) on GitHub.
 
-1. Fork the [main repository](https://github.com/japandotorg/LemonCord). Click on the 'Fork' button near the top of the page. This creates a copy of the code under your account on the Github server. 
+1. Fork the [main repository](https://github.com/japandotorg/LemonCord). Click on the 'Fork' button near the top of the page. This creates a copy of the code under your account on the GitHub server. 
 
 ![fork_button_github](./assets/docs/fork.png)
 
@@ -46,7 +46,7 @@ $ git push -u origin my-feature
 
 ![contirbute_button_github](./assets/docs/contribute_button.png)
 
-7. Now, make sure to type up a descriptive summary of your changes and anything furthur you would like to note about the changes inside the bot. State in breif details on the changes inside the Pull Request.
+7. Now, make sure to type up a descriptive summary of your changes and anything further you would like to note about the changes inside the bot. State in brief details on the changes inside the Pull Request.
 
 8. Finally, open the Pull Request to send your changes for review & wait for any response.
 
@@ -58,7 +58,7 @@ If you're not familiar with pull requests, please consider checking the [pull re
 
 Because we want to keep everything as consistent and clean as possible, here are some guidelines we strongly recommend you to try to follow when making a contribution.
 
-### Spelling, grammer, and wording
+### Spelling, grammar, and wording
 
 Improper grammar, strange wording, and incorrect spelling are all things that may lead to confusion when a user reads a guide page. It's important to attempt to keep the content clear and consistent. Re-read what you've written and place yourself in the shoes of someone else for a moment to see if you can fully understand everything without any confusion.
 
