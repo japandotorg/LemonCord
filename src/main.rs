@@ -5,7 +5,6 @@ extern crate tokio;
 extern crate anyhow;
 
 mod log;
-mod tests;
 
 use wry::{
     application::{
@@ -104,12 +103,10 @@ async fn discord() -> Result<()> {
             .with_taskbar_icon(Some(icon.clone()))
             .build(&event_loop)
             .unwrap_or_else(
-                |_| {
-                    log::write(
-                        "Unable to create window. shutting down".to_string(),
-                        log::Priority::High
-                    );
-                }
+                |_|
+                    panic!(
+                        "Unable to build window!"
+                    )
             )
     };
 
@@ -123,17 +120,15 @@ async fn discord() -> Result<()> {
 
         let icon: Icon = load_icon(std::path::Path::new(&icon_path));
 
-        let window = main_window
+        main_window
             .with_window_icon(Some(icon.clone()))
-            .build(&event_loop);
-
-        if window.is_err() {
-            log::write(
-                "Unable to create window. shutting down".to_string(),
-                log::Priority::High
-            );
-        }
-        window.unwrap()
+            .build(&event_loop)
+            .unwrap_or_else(
+                |_|
+                    panic!(
+                        "Unable to build window!"
+                    )
+            )
     };
 
     #[cfg(target_os = "macos")]
@@ -146,13 +141,12 @@ async fn discord() -> Result<()> {
             .with_menu(menu_bar_menu)
             .build(&event_loop)
             .unwrap_or_else(
-                |_| {
-                    log::write(
-                        "Unable to create window. shutting down",
-                        log::Priority::High
+                |_|
+                    panic!(
+                        "Unable to build window!"
                     )
-                }
             )
+
 
     };
 
