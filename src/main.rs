@@ -103,10 +103,13 @@ async fn discord() -> Result<()> {
             .with_taskbar_icon(Some(icon.clone()))
             .build(&event_loop)
             .unwrap_or_else(
-                |_|
-                    panic!(
-                        "Unable to build window!"
-                    )
+                |_| {
+                    log::write(
+                        "Unable to build window, shutting down!".to_string(),
+                        log::Priority::High
+                    );
+                    std::process::exit(1);
+                }
             )
     };
 
@@ -124,10 +127,12 @@ async fn discord() -> Result<()> {
             .with_window_icon(Some(icon.clone()))
             .build(&event_loop)
             .unwrap_or_else(
-                |_|
-                    panic!(
-                        "Unable to build window!"
-                    )
+                |_| {
+                        log::write(
+                            "Unable to build window, shutting down!".to_string(),
+                            log::Priority::High
+                        );
+                }
             )
     };
 
@@ -141,10 +146,12 @@ async fn discord() -> Result<()> {
             .with_menu(menu_bar_menu)
             .build(&event_loop)
             .unwrap_or_else(
-                |_|
-                    panic!(
-                        "Unable to build window!"
-                    )
+                |_| {
+                    log::write(
+                        "Unable to build window, shutting down!".to_string(),
+                        log::Priority::High
+                    );
+                }
             )
 
 
