@@ -289,7 +289,7 @@ fn load_icon(path: &std::path::Path) -> Icon {
     let r = Icon::from_rgba(icon_rgba, icon_width, icon_height);
     if r.is_err() {
         log::write(
-            "Failed to open icon. shutting down.".to_string(),
+            "Failed to open icon, shutting down.".to_string(),
             log::Priority::High
         );
     }
