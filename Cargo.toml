@@ -1,0 +1,18 @@
+[package]
+name = "lemon-cord"
+version = "0.1.1"
+edition = "2021"
+authors = ["Lemon Rose (japandotorg)"]
+readme = "README.md"
+license = "MIT"
+repository = "https://github.com/japandotorg/lemon-cord"
+description = "A light weight discord client made with love using the Rust programming language."
+keywords = ["discord", "app", "client", "discord-client", "discord-app"]
+categories = ["web-programming", "gui"]
+exclude = [".github/**", "Cargo.lock"]
+
+[dependencies]
+native-windows-gui = { version = "1.0.13" }
+once_cell = { version = "1.17.1" }
+webview2 = { version = "0.1.4" }
+winapi = { version = "0.3.9" }
