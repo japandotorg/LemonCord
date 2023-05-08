@@ -14,12 +14,12 @@ exclude = [".github/**", "Cargo.lock"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-dirs = { version = "4.0.0" }
+dirs = { version = "5.0.1" }
 tracing = { version = "0.1" }
 image = { version = "0.24.5" }
 anyhow = { version = "1.0.68" }
 tokio = { version = "1.24.2", features = ["full"] }
-wry = { version = "0.24.1", features = ["devtools"] }
+wry = { version = "0.28.3", features = ["devtools"] }
 colored = { version = "2.0.0" }
 strum_macros = { version = "0.24.3" }
 strum = { version = "0.24.1" }
