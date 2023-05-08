@@ -297,4 +297,3 @@ fn load_icon(path: &std::path::Path) -> Icon {
     }
     r.unwrap()
 }
-
