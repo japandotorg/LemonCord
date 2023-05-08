@@ -128,10 +128,11 @@ async fn discord() -> Result<()> {
             .build(&event_loop)
             .unwrap_or_else(
                 |_| {
-                        log::write(
-                            "Unable to build window, shutting down!".to_string(),
-                            log::Priority::High
-                        );
+                    log::write(
+                        "Unable to build window, shutting down!".to_string(),
+                        log::Priority::High
+                    );
+                    std::process::exit(1);
                 }
             )
     };
@@ -151,6 +152,7 @@ async fn discord() -> Result<()> {
                         "Unable to build window, shutting down!".to_string(),
                         log::Priority::High
                     );
+                    std::process::exit(1);
                 }
             )
 
