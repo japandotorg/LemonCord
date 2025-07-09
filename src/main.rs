@@ -264,7 +264,9 @@ async fn discord() -> Result<()> {
             } => {
                 #[cfg(target_os = "macos")]
                 if menu_id == close_item.clone().id() {
-                    window.set_minimized(true)
+                    if let Some(webview) = &_webview {
+                        webview.window().set_minimized(true)
+                    }
                 }
                 log::write(
                     format!( "Clicked on {:?}", menu_id),
